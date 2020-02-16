@@ -1,0 +1,16 @@
+<header>
+  <div class="container">
+    <a href="#" class="logo">Calories Tracker</a>
+    <nav>
+      <ul>
+        <li *ngIf="!isLoggedIn"><a href="#" routerLink="/signup">Sign up</a></li>
+        <li *ngIf="!isLoggedIn"><a href="#" routerLink="/login">Login</a></li>
+        <li *ngIf="isLoggedIn"><a href="#" (click)="logout()">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

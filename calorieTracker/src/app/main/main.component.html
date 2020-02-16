@@ -1,0 +1,48 @@
+<div class="row pt-5">
+	<div class="col-md-10 mx-auto">
+		<div class="card rounded-0">
+			<div class="card-header">
+				<h5>Add a meal</h5>
+			</div>
+			<div class="card-body">
+				<form class="row">
+					<div>
+                        <input [(ngModel)]="newMealData.text" name="text" placeholder="Comment" class="col-md-12 mx-auto rounded float-left" required>
+					</div>
+                    <div>
+						<label class="float-right">&nbsp;calories&nbsp;</label>
+						<input [(ngModel)]="newMealData.calo" name="calo" type="number" step=".1" placeholder="0.0" class="col-md-4 mx-auto rounded float-right" required/>
+                    </div>
+                    <button (click)="addMeal()" type="button" class="btn btn-sm btn-success float-right">Add</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row pt-2">
+	<div class="col-md-10 mx-auto">
+		<div class="card rounded-0">
+			<div class="card-header">
+				<h5 class="mb-0">Your meals</h5>
+			</div>
+			<div class="card-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>time</th>
+							<th>comment</th>
+							<th>calories</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let thisMeal of myMealData" class="card-text">
+							<td><p>{{thisMeal.timestamp}}</p></td>
+							<td><p>{{thisMeal.text}}</p></td>
+							<td><p>{{thisMeal.calo}}</p></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
