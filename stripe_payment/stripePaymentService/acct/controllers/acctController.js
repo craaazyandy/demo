@@ -18,9 +18,21 @@ console.log('  EMAIL:' + req.params.email);
 								transfers: {requested: true},
 							},
 						})
-						.then(customer => {
-							console.log(customer.id);
-							res.status(200).send({result: 1});
+						.then(influencer => {
+							const iid = influencer.id;
+							console.log('New Influencer Stripe id:' + iid);
+							// res.status(200).send({result: 1});
+							stripe.accountLinks.create({
+													account: iid,
+													refresh_url: 'http://localhost:3030/reauth',
+													return_url: 'http://localhost:3030/return',
+													type: 'account_onboarding',
+											   })
+											   .then(aLink => {
+													console.log('New Influencer account link:' + aLink.url);
+													res.status(200).send({result: 1});
+											   })
+											   .catch(error => console.error(error));
 						})
 						.catch(error => console.error(error));
 
@@ -59,7 +71,7 @@ exports.user_by_email = (req, res) => {
 };
 
 /**
- * Find all users
+ * Find all accounts
  */
 exports.all_accts = (req, res) => {
 	console.log('ALL ACCTS:' + JSON.stringify(req.body));
@@ -73,6 +85,30 @@ exports.all_accts = (req, res) => {
 								console.log(accounts);
 								res.status(200).send(accounts);
 							})
+							.catch(error => console.error(error));
+		}
+		catch (err) {
+			res.status(500).send({errors: err});
+		}
+};
+
+
+/**
+ * Delete an account
+ */
+exports.delete_acct = (req, res) => {
+	console.log('DELETE ACCT:' + JSON.stringify(req.body));
+	
+		// Stripe API to delete an account
+		try {
+			stripe.accounts.del(
+				req.params.id
+			  );
+			stripe.accounts.del(req.params.id)
+						   .then(accounts => {
+								console.log(accounts);
+								res.status(200).send(accounts);
+						   })
 							.catch(error => console.error(error));
 		}
 		catch (err) {

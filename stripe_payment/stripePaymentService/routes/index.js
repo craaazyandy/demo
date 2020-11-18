@@ -8,7 +8,8 @@ var router = express.Router();
 
 let acct = require('../acct/controllers/acctController');
 
-router.get('/new_acct/:email', acct.new_acct);
-router.get('/all_accts', acct.all_accts);
+router.post('/acct/:email', acct.new_acct);
+router.get('/accts', acct.all_accts);
+router.delete('/acct/:id', acct.delete_acct);
 
 module.exports = router;
