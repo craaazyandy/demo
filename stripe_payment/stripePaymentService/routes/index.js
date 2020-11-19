@@ -12,4 +12,6 @@ router.post('/acct/:email', acct.new_acct);
 router.get('/accts', acct.all_accts);
 router.delete('/acct/:id', acct.delete_acct);
 
+router.get('/acct_link/:id', acct.acct_link);
+
 module.exports = router;

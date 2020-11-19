@@ -1,11 +1,12 @@
 const stripe = require('stripe')('sk_test_51Hh4PTExKtPKw5yv7T2Yz3iGkrE5bEvqfPPUFX2jQuWWfKRG3OG6dOehGKJ2O9gVR0Stsf2EOecDMzMd3dI1ItLb00LRMyIHNu');
 
+
 /**
- * Sign up a new account
+ * Sign up a new connect account
  */
 exports.new_acct = (req, res) => {
 console.log('NEW ACCT:' + JSON.stringify(req.body));
-console.log('  EMAIL:' + req.params.email);
+console.log('   EMAIL:' + req.params.email);
 
 	// Stripe API to create new account
 	try {
@@ -13,6 +14,7 @@ console.log('  EMAIL:' + req.params.email);
 							type: 'express',
 							country: 'US',
 							email: req.params.email,
+							business_type: 'individual',
 							capabilities: {
 								card_payments: {requested: true},
 								transfers: {requested: true},
@@ -24,13 +26,15 @@ console.log('  EMAIL:' + req.params.email);
 							// res.status(200).send({result: 1});
 							stripe.accountLinks.create({
 													account: iid,
-													refresh_url: 'http://localhost:3030/reauth',
-													return_url: 'http://localhost:3030/return',
+													refresh_url: 'http://localhost:3030/refresh',
+													return_url: 'http://localhost:3030/complete',
 													type: 'account_onboarding',
 											   })
 											   .then(aLink => {
 													console.log('New Influencer account link:' + aLink.url);
-													res.status(200).send({result: 1});
+													res.status(200).send(
+														{id: iid, link: aLink.url},
+													);
 											   })
 											   .catch(error => console.error(error));
 						})
@@ -46,6 +50,34 @@ console.log('  EMAIL:' + req.params.email);
 		res.status(500).send({errors: err});
 	}
 };
+
+
+/**
+ * Retrieve a new account link for a connect account
+ */
+exports.acct_link = (req, res) => {
+	console.log('NEW ACCT LINK:' + JSON.stringify(req.body));
+	console.log('           ID:' + req.params.id);
+	
+		// Stripe API to create new account
+		try {
+			stripe.accountLinks.create({
+									account: req.params.id,
+									refresh_url: 'http://localhost:3030/reauth',
+									return_url: 'http://localhost:3030/return',
+									type: 'account_onboarding',
+								})
+								.then(aLink => {
+										console.log('New Influencer account link:' + aLink.url);
+										res.status(200).send({result: aLink.url});
+								})
+								.catch(error => console.error(error));
+		}
+		catch (err) {
+			res.status(500).send({errors: err});
+		}
+	};
+
 
 /**
  * Find a user by email
@@ -74,7 +106,7 @@ exports.user_by_email = (req, res) => {
  * Find all accounts
  */
 exports.all_accts = (req, res) => {
-	console.log('ALL ACCTS:' + JSON.stringify(req.body));
+	console.log('LIST ALL ACCTS:' + JSON.stringify(req.body));
 	
 		// Stripe API to create new account
 		try {
@@ -98,6 +130,7 @@ exports.all_accts = (req, res) => {
  */
 exports.delete_acct = (req, res) => {
 	console.log('DELETE ACCT:' + JSON.stringify(req.body));
+	console.log('         ID:' + req.params.id);
 	
 		// Stripe API to delete an account
 		try {
