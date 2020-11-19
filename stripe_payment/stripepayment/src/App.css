@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  width: 1400px;
+  height: 729px;
+  background: url(img/qp_stripe_background.png) no-repeat scroll 0 0
 }
 
 .App-logo {
@@ -35,4 +38,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Content {
+  background-color: white;
+  width: 420px;
+  height: 500px;
+  margin-left: 425px;
+  /* border: 3px solid green; */
+  padding-left: 10px;
+  padding-top: 100px;
 }
