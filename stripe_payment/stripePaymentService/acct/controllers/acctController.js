@@ -1,5 +1,57 @@
 const stripe = require('stripe')('sk_test_51Hh4PTExKtPKw5yv7T2Yz3iGkrE5bEvqfPPUFX2jQuWWfKRG3OG6dOehGKJ2O9gVR0Stsf2EOecDMzMd3dI1ItLb00LRMyIHNu');
 
+/**
+ * Sign up a new connect phone account
+ */
+exports.new_pacct = (req, res) => {
+	console.log('NEW PHONE ACCT:' + JSON.stringify(req.body));
+	console.log('         PHONE:' + req.params.phone);
+	
+		// Stripe API to create new account
+		try {
+			stripe.accounts.create({
+								type: 'express',
+								country: 'US',
+								individual: {
+									phone: req.params.phone
+								},
+								business_type: 'individual',
+								capabilities: {
+									card_payments: {requested: true},
+									transfers: {requested: true},
+								},
+							})
+							.then(influencer => {
+								const iid = influencer.id;
+								console.log('New Influencer Stripe id:' + iid);
+								// res.status(200).send({result: 1});
+								stripe.accountLinks.create({
+														account: iid,
+														refresh_url: 'http://localhost:3030/refresh',
+														return_url: 'http://localhost:3030/complete',
+														type: 'account_onboarding',
+												   })
+												   .then(aLink => {
+														console.log('New Influencer account link:' + aLink.url);
+														res.status(200).send(
+															{id: iid, link: aLink.url},
+														);
+												   })
+												   .catch(error => console.error(error));
+							})
+							.catch(error => console.error(error));
+	
+			// stripe.customers.create({
+			// 	email: 'customer@example.com',
+			//   })
+			// 	.then(customer => console.log(customer.id))
+			// 	.catch(error => console.error(error));
+		}
+		catch (err) {
+			res.status(500).send({errors: err});
+		}
+	};
+
 
 /**
  * Sign up a new connect account

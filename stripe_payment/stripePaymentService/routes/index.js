@@ -9,6 +9,7 @@ var router = express.Router();
 let acct = require('../acct/controllers/acctController');
 
 router.post('/acct/:email', acct.new_acct);
+router.post('/pacct/:phone', acct.new_pacct);
 router.get('/accts', acct.all_accts);
 router.delete('/acct/:id', acct.delete_acct);
 
