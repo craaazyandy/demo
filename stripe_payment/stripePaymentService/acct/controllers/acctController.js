@@ -3,7 +3,7 @@ const stripe = require('stripe')('sk_test_51Hh4PTExKtPKw5yv7T2Yz3iGkrE5bEvqfPPUF
 /**
  * Sign up a new connect phone account
  */
-exports.new_pacct = (req, res) => {
+exports.new_acct = (req, res) => {
 	console.log('NEW PHONE ACCT:' + JSON.stringify(req.body));
 	console.log('         PHONE:' + req.params.phone);
 	
@@ -12,10 +12,10 @@ exports.new_pacct = (req, res) => {
 			stripe.accounts.create({
 								type: 'express',
 								country: 'US',
-								individual: {
-									phone: req.params.phone
-								},
 								business_type: 'individual',
+								metadata: {
+									'phone': req.params.phone
+								},
 								capabilities: {
 									card_payments: {requested: true},
 									transfers: {requested: true},
@@ -51,57 +51,6 @@ exports.new_pacct = (req, res) => {
 			res.status(500).send({errors: err});
 		}
 	};
-
-
-/**
- * Sign up a new connect account
- */
-exports.new_acct = (req, res) => {
-console.log('NEW ACCT:' + JSON.stringify(req.body));
-console.log('   EMAIL:' + req.params.email);
-
-	// Stripe API to create new account
-	try {
-		stripe.accounts.create({
-							type: 'express',
-							country: 'US',
-							email: req.params.email,
-							business_type: 'individual',
-							capabilities: {
-								card_payments: {requested: true},
-								transfers: {requested: true},
-							},
-						})
-						.then(influencer => {
-							const iid = influencer.id;
-							console.log('New Influencer Stripe id:' + iid);
-							// res.status(200).send({result: 1});
-							stripe.accountLinks.create({
-													account: iid,
-													refresh_url: 'http://localhost:3030/refresh',
-													return_url: 'http://localhost:3030/complete',
-													type: 'account_onboarding',
-											   })
-											   .then(aLink => {
-													console.log('New Influencer account link:' + aLink.url);
-													res.status(200).send(
-														{id: iid, link: aLink.url},
-													);
-											   })
-											   .catch(error => console.error(error));
-						})
-						.catch(error => console.error(error));
-
-		// stripe.customers.create({
-		// 	email: 'customer@example.com',
-		//   })
-		// 	.then(customer => console.log(customer.id))
-		// 	.catch(error => console.error(error));
-	}
-	catch (err) {
-		res.status(500).send({errors: err});
-	}
-};
 
 
 /**
