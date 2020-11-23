@@ -18,5 +18,6 @@ router.post('/prod', prod.new_prod);
 
 router.get('/accts', acct.all_accts);
 router.get('/prods', prod.all_prods);
+router.get('/prices', prod.all_prices);
 
 module.exports = router;

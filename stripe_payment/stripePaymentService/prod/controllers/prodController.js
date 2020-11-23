@@ -49,21 +49,69 @@ exports.new_prod = (req, res) => {
 
 
 /**
- * Find all accounts
+ * Find all prods
  */
 exports.all_prods = (req, res) => {
 	console.log('LIST ALL PRODUCTS:' + JSON.stringify(req.body));
 	
 	// Stripe API to create new account
 	try {
+		stripe.products.list({
+							limit: 10,
+					   })
+					   .then(p => {
+							console.log(p);
+							res.status(200).send(p);
+					   })
+					   .catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
+
+
+/**
+ * Find all prices
+ */
+exports.all_prices = (req, res) => {
+	console.log('LIST ALL PRICES:' + JSON.stringify(req.body));
+	
+	// Stripe API to create new account
+	try {
 		stripe.prices.list({
 						limit: 10,
 					 })
-					 .then(prices => {
-						console.log(prices);
-						res.status(200).send(prices);
+					 .then(p => {
+						console.log(p);
+						res.status(200).send(p);
 					 })
 					 .catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
+
+
+/**
+ * Delete an account
+ */
+exports.delete_acct = (req, res) => {
+	console.log('DELETE ACCT:' + JSON.stringify(req.body));
+	console.log('         ID:' + req.params.id);
+	
+	// Stripe API to delete an account
+	try {
+		stripe.accounts.del(
+			req.params.id
+			);
+		stripe.accounts.del(req.params.id)
+						.then(accounts => {
+							console.log(accounts);
+							res.status(200).send(accounts);
+						})
+						.catch(error => console.error(error));
 	}
 	catch (err) {
 		res.status(500).send({errors: err});
