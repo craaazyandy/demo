@@ -109,7 +109,7 @@ exports.user_by_email = (req, res) => {
 exports.all_accts = (req, res) => {
 	console.log('LIST ALL ACCTS:' + JSON.stringify(req.body));
 	
-	// Stripe API to create new account
+	// List Influencers
 	try {
 		stripe.accounts.list({
 							limit: 10,
@@ -133,7 +133,7 @@ exports.delete_acct = (req, res) => {
 	console.log('DELETE ACCT:' + JSON.stringify(req.body));
 	console.log('         ID:' + req.params.id);
 	
-	// Stripe API to delete an account
+	// Delete Influencer
 	try {
 		stripe.accounts.del(
 			req.params.id

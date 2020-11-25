@@ -77,7 +77,7 @@ exports.all_prods = (req, res) => {
 exports.all_prices = (req, res) => {
 	console.log('LIST ALL PRICES:' + JSON.stringify(req.body));
 	
-	// Stripe API to create new account
+	// List Products
 	try {
 		stripe.prices.list({
 						limit: 10,
@@ -95,13 +95,13 @@ exports.all_prices = (req, res) => {
 
 
 /**
- * Delete an account
+ * Delete a Product
  */
-exports.delete_acct = (req, res) => {
+exports.delete_prod = (req, res) => {
 	console.log('DELETE ACCT:' + JSON.stringify(req.body));
 	console.log('         ID:' + req.params.id);
 	
-	// Stripe API to delete an account
+	// Delete Channel
 	try {
 		stripe.accounts.del(
 			req.params.id
