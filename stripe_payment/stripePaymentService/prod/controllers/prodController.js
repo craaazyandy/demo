@@ -98,18 +98,18 @@ exports.all_prices = (req, res) => {
  * Delete a Product
  */
 exports.delete_prod = (req, res) => {
-	console.log('DELETE ACCT:' + JSON.stringify(req.body));
+	console.log('DELETE PROD:' + JSON.stringify(req.body));
 	console.log('         ID:' + req.params.id);
 	
 	// Delete Channel
 	try {
-		stripe.accounts.del(
+		stripe.products.del(
 			req.params.id
 			);
 		stripe.accounts.del(req.params.id)
-						.then(accounts => {
-							console.log(accounts);
-							res.status(200).send(accounts);
+						.then(products => {
+							console.log(products);
+							res.status(200).send(products);
 						})
 						.catch(error => console.error(error));
 	}
@@ -117,3 +117,4 @@ exports.delete_prod = (req, res) => {
 		res.status(500).send({errors: err});
 	}
 };
+
