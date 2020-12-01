@@ -49,7 +49,7 @@ exports.user_by_email = (req, res) => {
 };
 
 /**
- * Find all accounts
+ * Find all customers
  */
 exports.all_custs = (req, res) => {
 	console.log('LIST ALL CUSTS:' + JSON.stringify(req.body));
@@ -72,7 +72,7 @@ exports.all_custs = (req, res) => {
 
 
 /**
- * Delete an account
+ * Delete a customer
  */
 exports.delete_cust = (req, res) => {
 	console.log('DELETE CUST:' + JSON.stringify(req.body));
@@ -80,13 +80,10 @@ exports.delete_cust = (req, res) => {
 	
 	// Delete Subscriber
 	try {
-		stripe.accounts.del(
-			req.params.id
-			);
-		stripe.accounts.del(req.params.id)
-						.then(accounts => {
-							console.log(accounts);
-							res.status(200).send(accounts);
+		stripe.customers.del(req.params.id)
+						.then(customers => {
+							console.log(customers);
+							res.status(200).send(customers);
 						})
 						.catch(error => console.error(error));
 	}

@@ -40,12 +40,6 @@ exports.new_acct = (req, res) => {
 												.catch(error => console.error(error));
 						})
 						.catch(error => console.error(error));
-
-		// stripe.customers.create({
-		// 	email: 'customer@example.com',
-		//   })
-		// 	.then(customer => console.log(customer.id))
-		// 	.catch(error => console.error(error));
 	}
 	catch (err) {
 		res.status(500).send({errors: err});
@@ -136,7 +130,7 @@ exports.delete_acct = (req, res) => {
 	// Delete Influencer
 	try {
 		stripe.accounts.del(
-			req.params.id
+				req.params.id
 			);
 		stripe.accounts.del(req.params.id)
 						.then(accounts => {

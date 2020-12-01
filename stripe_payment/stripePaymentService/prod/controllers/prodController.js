@@ -27,6 +27,7 @@ exports.new_prod = (req, res) => {
 											recurring: {interval: 'month'},
 											product: pid,
 											metadata: {
+												'channel': req.body.name,
 												'user': req.body.user
 											},
 										 })
@@ -56,29 +57,6 @@ exports.all_prods = (req, res) => {
 	
 	// Stripe API to create new account
 	try {
-		stripe.products.list({
-							limit: 10,
-					   })
-					   .then(p => {
-							console.log(p);
-							res.status(200).send(p);
-					   })
-					   .catch(error => console.error(error));
-	}
-	catch (err) {
-		res.status(500).send({errors: err});
-	}
-};
-
-
-/**
- * Find all prices
- */
-exports.all_prices = (req, res) => {
-	console.log('LIST ALL PRICES:' + JSON.stringify(req.body));
-	
-	// List Products
-	try {
 		stripe.prices.list({
 						limit: 10,
 					 })
@@ -92,29 +70,3 @@ exports.all_prices = (req, res) => {
 		res.status(500).send({errors: err});
 	}
 };
-
-
-/**
- * Delete a Product
- */
-exports.delete_prod = (req, res) => {
-	console.log('DELETE PROD:' + JSON.stringify(req.body));
-	console.log('         ID:' + req.params.id);
-	
-	// Delete Channel
-	try {
-		stripe.products.del(
-			req.params.id
-			);
-		stripe.accounts.del(req.params.id)
-						.then(products => {
-							console.log(products);
-							res.status(200).send(products);
-						})
-						.catch(error => console.error(error));
-	}
-	catch (err) {
-		res.status(500).send({errors: err});
-	}
-};
-
