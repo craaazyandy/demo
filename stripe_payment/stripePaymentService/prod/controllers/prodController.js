@@ -8,13 +8,15 @@ exports.new_prod = (req, res) => {
 	console.log('       NAME:' + req.body.name);
 	console.log('      PRICE:' + req.body.price);
 	console.log('       USER:' + req.body.user);
+	console.log('      PHONE:' + req.body.phone);
 
 	// Stripe API to create new Product wrapped inside a Price
 	try {
 		stripe.products.create({
 							name: req.body.name,
 							metadata: {
-								'user': req.body.user
+								'user': req.body.user,
+								'phone': req.body.phone
 							},
 						})
 						.then(product => {
@@ -28,7 +30,8 @@ exports.new_prod = (req, res) => {
 											product: pid,
 											metadata: {
 												'channel': req.body.name,
-												'user': req.body.user
+												'user': req.body.user,
+												'phone': req.body.phone
 											},
 										 })
 										 .then(price => {
@@ -62,7 +65,7 @@ exports.all_prods = (req, res) => {
 					 })
 					 .then(p => {
 						console.log(p);
-						res.status(200).send(p);
+						res.status(200).json(p);
 					 })
 					 .catch(error => console.error(error));
 	}

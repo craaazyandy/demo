@@ -4,8 +4,8 @@ const stripe = require('stripe')('sk_test_51Hh4PTExKtPKw5yv7T2Yz3iGkrE5bEvqfPPUF
  * Sign up a new connect phone account
  */
 exports.new_acct = (req, res) => {
-	console.log('NEW PHONE ACCT:' + JSON.stringify(req.body));
-	console.log('         PHONE:' + req.params.phone);
+	console.log('NEW CONNECT ACCT:' + JSON.stringify(req.body));
+	console.log('           PHONE:' + req.params.phone);
 	
 	// Stripe API to create new account
 	try {
