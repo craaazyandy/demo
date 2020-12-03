@@ -106,7 +106,7 @@ exports.all_accts = (req, res) => {
 	// List Influencers
 	try {
 		stripe.accounts.list({
-							limit: 10,
+							limit: 20,
 						})
 						.then(accounts => {
 							console.log(accounts);

@@ -61,7 +61,7 @@ exports.all_prods = (req, res) => {
 	// Stripe API to create new account
 	try {
 		stripe.prices.list({
-						limit: 10,
+						limit: 20,
 					 })
 					 .then(p => {
 						console.log(p);

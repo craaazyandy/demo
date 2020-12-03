@@ -57,7 +57,7 @@ exports.all_custs = (req, res) => {
 	// List Subscribers
 	try {
 		stripe.customers.list({
-							limit: 10,
+							limit: 20,
 						})
 						.then(customers => {
 							console.log(customers);
