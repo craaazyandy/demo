@@ -24,4 +24,6 @@ router.get('/accts', acct.all_accts);
 router.get('/prods', prod.all_prods);
 router.get('/custs', cust.all_custs);
 
+router.post('/create-checkout-session', adm.create_checkout_session);
+
 module.exports = router;

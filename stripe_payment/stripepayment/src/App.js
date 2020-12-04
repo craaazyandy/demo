@@ -4,9 +4,9 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Admin from './Admin'
 import Channels from './Channels'
+import Subscription from './Subscription'
 import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
-
 
 const Landing = () => {
   return (
@@ -35,9 +35,22 @@ const Complete = () => {
     <div className="App">
       <div className="Content">
         <div style={{margin:'auto'}}><img src={logo} alt="logo"/></div>
-        <h3>Thank you!</h3>
+        <h3>Thank you for setting up your Channel</h3>
         <p>You have completed your on boarding process</p>
         <p>Welcome to QP !!!</p>
+      </div>
+    </div>
+  )
+}
+
+const Subscribed = () => {
+  return (
+    <div className="App">
+      <div className="Content">
+        <div style={{margin:'auto'}}><img src={logo} alt="logo"/></div>
+        <h3>Thank you for your Subscription</h3>
+        <p>On behaif of all the pigeons in the world, we thank you !!!</p>
+        <p>Enjoy your channel !!!</p>
       </div>
     </div>
   )
@@ -92,11 +105,17 @@ function App() {
         <Route exact path="/complete">
             <Complete/>
         </Route>
+        <Route exact path="/subscribed">
+            <Subscribed/>
+        </Route>
         <Route exact path="/admin">
             <Admin/>
         </Route>
         <Route exact path="/channels">
             <Channels/>
+        </Route>
+        <Route exact path="/subscription/:channel/:cust">
+            <Subscription/>
         </Route>
         <Route exact path="/example">
             <Example/>

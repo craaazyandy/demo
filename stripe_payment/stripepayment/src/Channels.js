@@ -37,6 +37,10 @@ export default function Channels() {
     if (n === 'user') setUser(event.target.value);
   }
 
+  /**
+   * 
+   * add Channel
+   */
   function addChannel(ownerAccount, ownerPhone) {
     console.log('creating product with name:' + productName + 'price:' + productPrice + 'acct:' + ownerAccount + 'phone:' + ownerPhone);
 
@@ -59,6 +63,10 @@ export default function Channels() {
           )
   }
 
+  /**
+   * 
+   * refresh channels
+   */
   function refreshChannels() {
 
     // get list of products (prices objects)
@@ -76,6 +84,7 @@ export default function Channels() {
   }
 
   /**
+   * 
    * For first time channel creator, also create connect account
    */
   function handleAdd(event) {
@@ -86,10 +95,6 @@ export default function Channels() {
       // Set up new connect account
       fetch("http://localhost:3000/acct/" + user, {
         method: 'post',
-        // body: 'phone=' + user,
-        // headers: {
-        //   'Content-Type': 'application/x-www-form-urlencoded',
-        // }
       })
       .then(res => {
         res.json()
@@ -111,28 +116,58 @@ export default function Channels() {
     }
   }
 
+  /**
+   * 
+   * handle subscription
+   */
   function handleSubscribe(ch) {
     console.log('Ready to subscribe to:' + ch);
     const v = document.getElementById(ch).value;
     console.log('customer entered:' + v);
+
+    if (!v.startsWith("cus_")) {
+      // Set up new customer
+      fetch("http://localhost:3000/cust/" + v, {
+        method: 'post',
+      })
+      .then(res => {
+        res.json()
+           .then(data => {
+              const subId = data.id;
+              alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + subId);
+           })
+           .catch(err => console.log('json() error:' + err))
+      })
+      .catch(
+        (error) => {
+            alert("ERROR creating new connect account" + error);
+        }
+      )
+    }
   }
 
+  /**
+   * 
+   * list channels
+   */
   const ListChannels = () => {
     
     if (prodList && prodList.length > 0) {
 
       return prodList.map((pd) => {
+        const priceId = pd.id;
         const nm = pd.metadata.channel;
+        const ur = pd.metadata.user;
+        const ph = pd.metadata.phone;
         return (
-          <tr key={nm}>
+          <tr key={priceId}>
             <td>{nm} ({pd.unit_amount}¢)</td>
-            <td>{pd.metadata.user}</td>
-            <td>{pd.metadata.phone}</td>
+            <td>{ur} {(ph.startsWith("acct_")) ? '' : '(' + ph + ')'}</td>
             <td>
               <label>
-                  <input id={nm} type="text" name="sub" size="10" maxLength="20" placeholder="customer"/>
+                  <input id={priceId} type="text" name="sub" size="10" maxLength="20" placeholder="customer"/>
               </label>
-              <button onClick={() => handleSubscribe(nm)}><SubIcon/></button>
+              <button onClick={() => handleSubscribe(priceId)}><SubIcon/></button>
             </td>
           </tr>
         )
@@ -142,7 +177,6 @@ export default function Channels() {
       return (
         <tr>
           <td>No Channels</td>
-          <td></td>
           <td></td>
           <td></td>
       </tr>
@@ -173,8 +207,7 @@ export default function Channels() {
             <thead>
               <tr>
                 <th>Channel</th>
-                <th>Owner</th>
-                <th>Owner Phone</th>
+                <th>Channel Owner</th>
                 <th>Action</th>
               </tr>
             </thead>
