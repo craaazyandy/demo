@@ -144,6 +144,9 @@ export default function Channels() {
         }
       )
     }
+    else {
+      alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + v);
+    }
   }
 
   /**

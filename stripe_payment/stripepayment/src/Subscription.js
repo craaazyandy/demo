@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from "react-router-dom"
 import logo from './img/qplogo.png'
+import bkgd from './img/background.png'
 import './App.css'
 
 var stripe = window.Stripe('pk_test_51Hh4PTExKtPKw5yvleHfMcKOFOKLyf0AhX8KEeATqqjKaFE2d5dnGjEr8GlGGaVjRYEaQ0sBdIF0pU9wLBBPBYXQ00LtoX2Pbh');
@@ -39,8 +40,9 @@ export default function Subscription() {
     <div className="App">
       <div className="AdminContent">
         <div style={{margin:'auto'}}><img src={logo} alt="logo"/></div>
-          <h3>{myParams.cust}</h3>
-          <h3>{myParams.channel}</h3>
+        <div style={{width:'697px',height:'753px',backgroundImage:`url(${bkgd})`}}>
+          <h3>Hello {myParams.cust}</h3>
+          <h3>Confirm subscription to {myParams.channel}</h3>
           <button onClick={ () => {
               createCheckoutSession(myParams.channel, myParams.cust)
                 .then(function(data) {
@@ -52,7 +54,8 @@ export default function Subscription() {
                   .then(handleResult);
               });
             }
-          }>Please click to complete payment information</button>
+          }>Complete payment information</button>
+        </div>
       </div>
     </div>
   )
