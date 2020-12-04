@@ -23,6 +23,7 @@ router.post('/prod', prod.new_prod);
 router.get('/accts', acct.all_accts);
 router.get('/prods', prod.all_prods);
 router.get('/custs', cust.all_custs);
+router.get('/subs', adm.all_subs);
 
 router.post('/create-checkout-session', adm.create_checkout_session);
 

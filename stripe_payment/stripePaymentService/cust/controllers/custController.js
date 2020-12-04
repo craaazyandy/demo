@@ -15,7 +15,7 @@ exports.new_cust = (req, res) => {
 						.then(subscriber => {
 							const sid = subscriber.id;
 							console.log('New Subscriber Stripe id:' + sid);
-							res.status(200).send({result: 1});
+							res.status(200).send({id: sid});
 						})
 						.catch(error => console.error(error));
 	}

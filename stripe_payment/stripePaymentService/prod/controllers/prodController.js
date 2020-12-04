@@ -26,7 +26,7 @@ exports.new_prod = (req, res) => {
 							stripe.prices.create({
 											unit_amount: req.body.price,
 											currency: 'usd',
-											recurring: {interval: 'month'},
+											recurring: {interval: 'day'},
 											product: pid,
 											metadata: {
 												'channel': req.body.name,
@@ -58,7 +58,6 @@ exports.new_prod = (req, res) => {
 exports.all_prods = (req, res) => {
 	console.log('LIST ALL PRODUCTS:' + JSON.stringify(req.body));
 	
-	// Stripe API to create new account
 	try {
 		stripe.prices.list({
 						limit: 20,
