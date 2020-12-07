@@ -26,5 +26,6 @@ router.get('/custs', cust.all_custs);
 router.get('/subs', adm.all_subs);
 
 router.post('/create-checkout-session', adm.create_checkout_session);
+router.post('/subs', adm.new_subs);
 
 module.exports = router;

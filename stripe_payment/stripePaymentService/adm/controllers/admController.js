@@ -59,49 +59,30 @@ exports.all_subs = (req, res) => {
 
 
 /**
- * Find all prices
+ * New Subscription
  */
-exports.all_prices = (req, res) => {
-	console.log('LIST ALL PRICES:' + JSON.stringify(req.body));
-	
-	// List Products
+exports.new_subs = (req, res) => {
+	console.log('NEW SUBSCRIPTION:' + JSON.stringify(req.body));
+	console.log('        CUSTOMER:' + req.body.custId);
+	console.log('           PRICE:' + req.body.priceId);
+
+	// Stripe API to create new Subscription
 	try {
-		stripe.prices.list({
-						limit: 10,
-					 })
-					 .then(p => {
-						console.log(p);
-						res.status(200).send(p);
-					 })
-					 .catch(error => console.error(error));
+		stripe.subscriptions.create({
+								customer: req.body.custId,
+								items: [
+									{price: req.body.priceId},
+								],
+							})
+							.then(subscription => {
+								const sid = subscription.id;
+								console.log('New Subscription id:' + sid);
+								res.status(200).send({subscription_id: sid});
+							})
+							.catch(error => console.error(error));
 	}
 	catch (err) {
 		res.status(500).send({errors: err});
 	}
+
 };
-
-
-/**
- * Delete a Product
- */
-exports.delete_prod = (req, res) => {
-	console.log('DELETE PROD:' + JSON.stringify(req.body));
-	console.log('         ID:' + req.params.id);
-	
-	// Delete Channel
-	try {
-		stripe.products.del(
-			req.params.id
-			);
-		stripe.accounts.del(req.params.id)
-						.then(products => {
-							console.log(products);
-							res.status(200).send(products);
-						})
-						.catch(error => console.error(error));
-	}
-	catch (err) {
-		res.status(500).send({errors: err});
-	}
-};
-
