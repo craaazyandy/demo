@@ -145,9 +145,33 @@ export default function Channels() {
       )
     }
     else {
-      alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + v);
+      // Set up subscription
+      fetch("http://localhost:3000/subs/", {
+        method: 'post',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          priceId: ch,
+          custId: v
+        })
+      })
+      .then(res => {
+        res.json()
+           .then(data => {
+              const subId = data.id;
+              alert('Thank you!  Subscription ' + subId + ' has been created');
+           })
+           .catch(err => console.log('json() error:' + err))
+      })
+      .catch(
+        (error) => {
+            alert("ERROR creating new connect account" + error);
+        }
+      )
     }
   }
+
 
   /**
    * 
