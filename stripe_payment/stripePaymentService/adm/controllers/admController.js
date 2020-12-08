@@ -1,4 +1,4 @@
-const stripe = require('stripe')('sk_test_51Hh4PTExKtPKw5yv7T2Yz3iGkrE5bEvqfPPUFX2jQuWWfKRG3OG6dOehGKJ2O9gVR0Stsf2EOecDMzMd3dI1ItLb00LRMyIHNu');
+const stripe = require('stripe')(process.env.STRIPE_SK_TEST_KEY);
 
 /**
  * New Checkout Session
@@ -7,6 +7,7 @@ exports.create_checkout_session = (req, res) => {
 	console.log('NEW CHECKOUT SESSION:' + JSON.stringify(req.body));
 	console.log('             CHANNEL:' + req.body.priceId);
 	console.log('          SUBSCRIBER:' + req.body.custId);
+
 
 	// Stripe API to create new Product wrapped inside a Price
 	try {
