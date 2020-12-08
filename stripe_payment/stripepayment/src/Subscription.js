@@ -4,7 +4,7 @@ import logo from './img/qplogo.png'
 import bkgd from './img/background.png'
 import './App.css'
 
-var stripe = window.Stripe('pk_test_51Hh4PTExKtPKw5yvleHfMcKOFOKLyf0AhX8KEeATqqjKaFE2d5dnGjEr8GlGGaVjRYEaQ0sBdIF0pU9wLBBPBYXQ00LtoX2Pbh');
+const stripe = window.Stripe(process.env.REACT_APP_STRIPE_PK_TEST_KEY);
 
 export default function Subscription() {
 
