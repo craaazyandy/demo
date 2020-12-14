@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from "react-router-dom"
-import logo from './img/qplogo.png'
+import logo from './img/logo_transparent.png'
 import bkgd from './img/background.png'
 import './App.css'
 

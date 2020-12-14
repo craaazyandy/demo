@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy  } from 'react'
-import logo from './img/qplogo.png'
-import pigeon from './img/p.gif'
+import logo from './img/logo_transparent.png'
+// import pigeon from './img/p.gif'
 import './App.css'
 const AdminAccounts = lazy(() => import('./AdminAccounts'));
 const AdminProducts = lazy(() => import('./AdminProducts'));
@@ -11,14 +11,14 @@ export default function Admin() {
 
   const Loading = () => {
     return (
-      <div style={{margin:'auto'}}><img src={pigeon} alt="loading..."/></div>
+      <div style={{margin:'auto'}}><img src={logo} alt="loading..."/></div>
     )
   }
 
   return (
     <div className="App">
       <div className="AdminContent">
-        <div style={{margin:'auto'}}><img src={pigeon} alt="logo"/></div>
+        <div style={{margin:'auto'}}><img src={logo} alt="logo"/></div>
         <div className="AdminItem">
           <div>
             <h4>Connected Accounts</h4>

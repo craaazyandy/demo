@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import logo from './img/qplogo.png'
+import logo from './img/logo_transparent.png'
 import './App.css'
 import Table from 'react-bootstrap/Table'
 

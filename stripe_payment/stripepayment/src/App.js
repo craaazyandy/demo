@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from './img/qplogo.png'
+import logo from './img/logo_transparent.png'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Admin from './Admin'
