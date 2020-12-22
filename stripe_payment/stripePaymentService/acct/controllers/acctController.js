@@ -106,7 +106,7 @@ exports.all_accts = (req, res) => {
 	// List Influencers
 	try {
 		stripe.accounts.list({
-							limit: 20,
+							limit: 100,
 						})
 						.then(accounts => {
 							console.log(accounts);
@@ -129,9 +129,6 @@ exports.delete_acct = (req, res) => {
 	
 	// Delete Influencer
 	try {
-		stripe.accounts.del(
-				req.params.id
-			);
 		stripe.accounts.del(req.params.id)
 						.then(accounts => {
 							console.log(accounts);

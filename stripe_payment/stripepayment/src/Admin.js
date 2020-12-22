@@ -20,14 +20,14 @@ export default function Admin() {
       <div className="AdminContent">
         <div style={{margin:'auto'}}><img src={logo} alt="logo"/></div>
         <div className="AdminItem">
-          <div>
+          {/* <div>
             <h4>Connected Accounts</h4>
             <ul>
               <Suspense fallback={<div>loading...</div>}>
                 <AdminAccounts/>
               </Suspense>
             </ul>
-          </div>
+          </div> */}
           <div>
             <h4>Products</h4>
             <ul>
