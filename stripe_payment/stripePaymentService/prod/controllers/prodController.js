@@ -60,7 +60,7 @@ exports.all_prods = (req, res) => {
 	
 	try {
 		stripe.prices.list({
-						limit: 20,
+						limit: 100,
 					 })
 					 .then(p => {
 						console.log(p);

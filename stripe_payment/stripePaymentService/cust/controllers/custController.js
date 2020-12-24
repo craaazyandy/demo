@@ -57,11 +57,55 @@ exports.all_custs = (req, res) => {
 	// List Subscribers
 	try {
 		stripe.customers.list({
-							limit: 20,
+							limit: 100,
 						})
 						.then(customers => {
 							console.log(customers);
 							res.status(200).send(customers);
+						})
+						.catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
+
+/**
+ * Find all setup intents
+ */
+exports.all_setup_intents = (req, res) => {
+	console.log('LIST ALL CUSTS SETUP INTENTS:' + JSON.stringify(req.body));
+	
+	// List customers setup intents
+	try {
+		stripe.setupIntents.list({
+							limit: 100,
+						})
+						.then(si => {
+							console.log(si);
+							res.status(200).send(si);
+						})
+						.catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
+
+/**
+ * Find all payment intents
+ */
+exports.all_payment_intents = (req, res) => {
+	console.log('LIST ALL CUSTS PAYMENT INTENTS:' + JSON.stringify(req.body));
+	
+	// List customers payment intents
+	try {
+		stripe.paymentIntents.list({
+							limit: 100,
+						})
+						.then(pi => {
+							console.log(pi);
+							res.status(200).send(pi);
 						})
 						.catch(error => console.error(error));
 	}
@@ -84,6 +128,31 @@ exports.delete_cust = (req, res) => {
 						.then(customers => {
 							console.log(customers);
 							res.status(200).send(customers);
+						})
+						.catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
+
+
+
+
+
+/**
+ * Sign up a new subscriber
+ */
+exports.temp = (req, res) => {
+
+	try {
+		stripe.paymentMethods.attach(
+			'pm_1I1lcAExKtPKw5yvOAURa1ty',
+			{customer: 'cus_Id1SttrUyPrLDb'}
+		  )
+						.then(result => {
+							console.log(result);
+							res.status(200).send(result);
 						})
 						.catch(error => console.error(error));
 	}

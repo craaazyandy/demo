@@ -23,6 +23,9 @@ exports.create_checkout_session = (req, res) => {
 									],
 									success_url: "http://localhost:3030/Subscribed",
 									cancel_url: "http://localhost:3030/Subscribed",
+									// payment_intent_data: {
+									// 	setup_future_usage: 'off_session'
+									// }
 								})
 								.then(session => {
 									const sid = session.id;

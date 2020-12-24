@@ -58,8 +58,8 @@ exports.acct_link = (req, res) => {
 	try {
 		stripe.accountLinks.create({
 								account: req.params.id,
-								refresh_url: 'http://localhost:3030/reauth',
-								return_url: 'http://localhost:3030/return',
+								refresh_url: 'http://localhost:3030/refresh',
+								return_url: 'http://localhost:3030/complete',
 								type: 'account_onboarding',
 							})
 							.then(aLink => {
