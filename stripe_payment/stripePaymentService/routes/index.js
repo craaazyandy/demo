@@ -23,9 +23,13 @@ router.post('/prod', prod.new_prod);
 router.get('/accts', acct.all_accts);
 router.get('/prods', prod.all_prods);
 router.get('/custs', cust.all_custs);
+router.get('/setup_intents', cust.all_setup_intents);
+router.get('/payment_intents', cust.all_payment_intents);
 router.get('/subs', adm.all_subs);
 
 router.post('/create-checkout-session', adm.create_checkout_session);
 router.post('/subs', adm.new_subs);
+
+router.post('/temp', cust.temp);
 
 module.exports = router;
