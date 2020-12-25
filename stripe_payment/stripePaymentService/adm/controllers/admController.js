@@ -69,6 +69,7 @@ exports.new_subs = (req, res) => {
 	console.log('NEW SUBSCRIPTION:' + JSON.stringify(req.body));
 	console.log('        CUSTOMER:' + req.body.custId);
 	console.log('           PRICE:' + req.body.priceId);
+	console.log('  PAYMENT METHOD:' + req.body.paymentMethod);
 
 	// Stripe API to create new Subscription
 	try {
@@ -77,6 +78,7 @@ exports.new_subs = (req, res) => {
 								items: [
 									{price: req.body.priceId},
 								],
+								default_payment_method: req.body.paymentMethod
 							})
 							.then(subscription => {
 								const sid = subscription.id;

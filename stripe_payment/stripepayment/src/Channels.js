@@ -145,30 +145,47 @@ export default function Channels() {
       )
     }
     else {
-      // Set up subscription
-      fetch("http://localhost:3000/subs/", {
-        method: 'post',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          priceId: ch,
-          custId: v
+      // retrieve payment methods for this customer
+      fetch("http://localhost:3000/payment_methods/" + v)
+        .then(res => {
+          res.json()
+             .then(data => {
+               const pmAry = data.data;
+               if (pmAry.length > 0) {
+                  const pmId = pmAry[0].id; // Its a POC!  Use the first pm
+                  // Set up subscription
+                  fetch("http://localhost:3000/subs/", {
+                    method: 'post',
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                      priceId: ch,
+                      custId: v,
+                      paymentMethod: pmId
+                    })
+                  })
+                  .then(res => {
+                    res.json()
+                      .then(data => {
+                          const subId = data.id;
+                          alert('Thank you!  Subscription ' + subId + ' has been created');
+                      })
+                      .catch(err => console.log('json() error:' + err))
+                  })
+                  .catch(
+                    (error) => {
+                        alert("ERROR creating new connect account" + error);
+                    }
+                  )
+               }
+               else {
+                  // no payment method
+                  alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + v);
+               }
+             })
+
         })
-      })
-      .then(res => {
-        res.json()
-           .then(data => {
-              const subId = data.id;
-              alert('Thank you!  Subscription ' + subId + ' has been created');
-           })
-           .catch(err => console.log('json() error:' + err))
-      })
-      .catch(
-        (error) => {
-            alert("ERROR creating new connect account" + error);
-        }
-      )
     }
   }
 

@@ -70,50 +70,6 @@ exports.all_custs = (req, res) => {
 	}
 };
 
-/**
- * Find all setup intents
- */
-exports.all_setup_intents = (req, res) => {
-	console.log('LIST ALL CUSTS SETUP INTENTS:' + JSON.stringify(req.body));
-	
-	// List customers setup intents
-	try {
-		stripe.setupIntents.list({
-							limit: 100,
-						})
-						.then(si => {
-							console.log(si);
-							res.status(200).send(si);
-						})
-						.catch(error => console.error(error));
-	}
-	catch (err) {
-		res.status(500).send({errors: err});
-	}
-};
-
-/**
- * Find all payment intents
- */
-exports.all_payment_intents = (req, res) => {
-	console.log('LIST ALL CUSTS PAYMENT INTENTS:' + JSON.stringify(req.body));
-	
-	// List customers payment intents
-	try {
-		stripe.paymentIntents.list({
-							limit: 100,
-						})
-						.then(pi => {
-							console.log(pi);
-							res.status(200).send(pi);
-						})
-						.catch(error => console.error(error));
-	}
-	catch (err) {
-		res.status(500).send({errors: err});
-	}
-};
-
 
 /**
  * Delete a customer
@@ -137,22 +93,69 @@ exports.delete_cust = (req, res) => {
 };
 
 
-
-
+/**
+ * Find all setup intents
+ */
+exports.all_setup_intents = (req, res) => {
+	console.log('LIST ALL SETUP INTENTS:' + JSON.stringify(req.body));
+	
+	// List customers setup intents
+	try {
+		stripe.setupIntents.list({
+							limit: 100,
+						})
+						.then(si => {
+							console.log(si);
+							res.status(200).send(si);
+						})
+						.catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
 
 /**
- * Sign up a new subscriber
+ * Find all payment intents
  */
-exports.temp = (req, res) => {
-
+exports.all_payment_intents = (req, res) => {
+	console.log('LIST ALL PAYMENT INTENTS:' + JSON.stringify(req.body));
+	
+	// List customers setup intents
 	try {
-		stripe.paymentMethods.attach(
-			'pm_1I1lcAExKtPKw5yvOAURa1ty',
-			{customer: 'cus_Id1SttrUyPrLDb'}
-		  )
-						.then(result => {
-							console.log(result);
-							res.status(200).send(result);
+		stripe.paymentIntents.list({
+							limit: 100,
+						})
+						.then(pi => {
+							console.log(pi);
+							res.status(200).send(pi);
+						})
+						.catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
+
+/**
+ * Find all payment methods
+ */
+exports.all_payment_methods = (req, res) => {
+	console.log('LIST ALL CUSTS PAYMENT METHODS:' + JSON.stringify(req.body));
+	
+	// List customers payment methods
+	// const paymentMethods = await stripe.paymentMethods.list({
+	// 	customer: req.params.cust,
+	// 	type: 'card',
+	//   });
+	try {
+		stripe.paymentMethods.list({
+							customer: req.params.cust,
+							type: 'card',
+						})
+						.then(pm => {
+							console.log(pm);
+							res.status(200).send(pm);
 						})
 						.catch(error => console.error(error));
 	}

@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 
 export default function Admin() {
-  const [piList, setPiList] = useState([]);
-  const [piOpen, setPiOpen] = useState([]);
+  const [paymentIntentList, setPaymentIntentList] = useState([]);
+  const [paymentIntentOpen, setPaymentIntentOpen] = useState([]);
 
   useEffect(() => {
     refreshPaymentIntents();
@@ -21,7 +21,7 @@ export default function Admin() {
       .then(res => {
         res.json()
            .then(data => {
-              setPiList(data.data);
+              setPaymentIntentList(data.data);
            })
            .catch(err => console.log('json() error:' + err))
       })
@@ -34,14 +34,14 @@ export default function Admin() {
    */
   const ListPaymentIntents = () => {
 
-    if (piList && piList.length > 0) {
-      if (piOpen.length < 1) {
-        const aSize = piList.length;
+    if (paymentIntentList && paymentIntentList.length > 0) {
+      if (paymentIntentOpen.length < 1) {
+        const aSize = paymentIntentList.length;
         let tAry = Array(aSize).fill(false);
-        setPiOpen(tAry);
+        setPaymentIntentOpen(tAry);
       }
 
-      return piList.map((data, idx) => {
+      return paymentIntentList.map((data, idx) => {
         const id = data.id;
         const cu = data.customer;
 
@@ -49,14 +49,14 @@ export default function Admin() {
           <li key={id}>
             <Button
               onClick={() => {
-                let tempAry = [...piOpen];
+                let tempAry = [...paymentIntentOpen];
                 tempAry[idx] = !tempAry[idx];
-                setPiOpen(tempAry);
+                setPaymentIntentOpen(tempAry);
               }}
               aria-controls={id}
-              aria-expanded={piOpen[idx]}
+              aria-expanded={paymentIntentOpen[idx]}
             >{id} ({cu})</Button>
-            <Collapse in={piOpen[idx]}>
+            <Collapse in={paymentIntentOpen[idx]}>
               <div id={id} style={{borderStyle:'solid'}}><div><pre>{JSON.stringify(data, null, 2) }</pre></div></div>
             </Collapse>
           </li>
@@ -71,8 +71,8 @@ export default function Admin() {
   }
 
   return (
-            <>
-              <ListPaymentIntents/>
-            </>
+    <>
+      <ListPaymentIntents/>
+    </>
   )
 }
