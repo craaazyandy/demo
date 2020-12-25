@@ -6,7 +6,9 @@ const AdminAccounts = lazy(() => import('./AdminAccounts'));
 const AdminProducts = lazy(() => import('./AdminProducts'));
 const AdminCustomers = lazy(() => import('./AdminCustomers'));
 const AdminSubscriptions = lazy(() => import('./AdminSubscriptions'));
+const AdminPaymentMethods = lazy(() => import('./AdminPaymentMethods'));
 const AdminPaymentIntents = lazy(() => import('./AdminPaymentIntents'));
+const AdminSetupIntents = lazy(() => import('./AdminSetupIntents'));
 
 export default function Admin() {
 
@@ -54,10 +56,26 @@ export default function Admin() {
             </ul>
           </div>
           <div>
+            <h4>PaymentMethods</h4>
+            <ul>
+              <Suspense fallback={<div>loading...</div>}>
+                <AdminPaymentMethods/>
+              </Suspense>
+            </ul>
+          </div>
+          <div>
             <h4>PaymentIntents</h4>
             <ul>
               <Suspense fallback={<div>loading...</div>}>
                 <AdminPaymentIntents/>
+              </Suspense>
+            </ul>
+          </div>
+          <div>
+            <h4>SetupIntents</h4>
+            <ul>
+              <Suspense fallback={<div>loading...</div>}>
+                <AdminSetupIntents/>
               </Suspense>
             </ul>
           </div>
