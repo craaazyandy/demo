@@ -114,7 +114,7 @@ function App() {
         <Route exact path="/channels">
             <Channels/>
         </Route>
-        <Route exact path="/subscription/:channel/:cust">
+        <Route exact path="/subscription/:channel/:tax/:cust">
             <Subscription/>
         </Route>
         <Route exact path="/example">
