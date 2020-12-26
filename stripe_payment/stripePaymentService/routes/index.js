@@ -26,6 +26,7 @@ router.get('/custs', cust.all_custs);
 router.get('/setup_intents', cust.all_setup_intents);
 router.get('/payment_intents', cust.all_payment_intents);
 router.get('/payment_methods/:cust', cust.all_payment_methods);
+router.get('/invoices', cust.all_invoices);
 router.get('/subs', adm.all_subs);
 
 router.post('/create-checkout-session', adm.create_checkout_session);

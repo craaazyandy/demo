@@ -163,3 +163,25 @@ exports.all_payment_methods = (req, res) => {
 		res.status(500).send({errors: err});
 	}
 };
+
+/**
+ * Find all invoices
+ */
+exports.all_invoices = (req, res) => {
+	console.log('LIST ALL INVOICES:' + JSON.stringify(req.body));
+	
+	// List customers invoices
+	try {
+		stripe.invoices.list({
+							limit: 100,
+						})
+						.then(iv => {
+							console.log(iv);
+							res.status(200).send(iv);
+						})
+						.catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
