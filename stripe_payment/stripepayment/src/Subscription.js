@@ -9,8 +9,9 @@ const stripe = window.Stripe(process.env.REACT_APP_STRIPE_PK_TEST_KEY);
 export default function Subscription() {
 
   const myParams = useParams()
-  console.log('subscription received:' + myParams.channel);
-  console.log('subscription received:' + myParams.cust);
+  console.log('subscription received. Channel:' + myParams.channel);
+  console.log('subscription received. Tax rate:' + myParams.tax);
+  console.log('subscription received. Subscriber:' + myParams.cust);
 
   // Handle any errors returned from Checkout
   var handleResult = function(result) {
@@ -22,7 +23,7 @@ export default function Subscription() {
   };
 
   // Create a Checkout Session with the selected plan ID
-  var createCheckoutSession = function(priceId, custId) {
+  var createCheckoutSession = function(priceId, taxR, custId) {
     return fetch("http://localhost:3000/create-checkout-session/", {
               method: "POST",
               headers: {
@@ -30,6 +31,7 @@ export default function Subscription() {
               },
               body: JSON.stringify({
                 priceId: priceId,
+                taxRate: taxR,
                 custId: custId
               })
             })
@@ -44,7 +46,7 @@ export default function Subscription() {
           <h3>Hello {myParams.cust}</h3>
           <h3>Confirm subscription to {myParams.channel}</h3>
           <button onClick={ () => {
-              createCheckoutSession(myParams.channel, myParams.cust)
+              createCheckoutSession(myParams.channel, myParams.tax, myParams.cust)
                 .then(function(data) {
                 // Call Stripe.js method to redirect to the new Checkout page
                 stripe

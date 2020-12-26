@@ -122,9 +122,14 @@ export default function Channels() {
    */
   function handleSubscribe(ch) {
     console.log('Ready to subscribe to:' + ch);
+    const chTax = ch + "-tax";
     const v = document.getElementById(ch).value;
     console.log('customer entered:' + v);
+    const t = document.getElementById(chTax).value;
+    const tR = (isNaN(t)) ? '0' : t;
+    console.log('customer tax rate:' + tR);
 
+    if (v) {
     if (!v.startsWith("cus_")) {
       // Set up new customer
       fetch("http://localhost:3000/cust/" + v, {
@@ -134,7 +139,7 @@ export default function Channels() {
         res.json()
            .then(data => {
               const subId = data.id;
-              alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + subId);
+              alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + tR + '/' + subId);
            })
            .catch(err => console.log('json() error:' + err))
       })
@@ -162,7 +167,8 @@ export default function Channels() {
                     body: JSON.stringify({
                       priceId: ch,
                       custId: v,
-                      paymentMethod: pmId
+                      paymentMethod: pmId,
+                      taxRate: tR
                     })
                   })
                   .then(res => {
@@ -181,11 +187,12 @@ export default function Channels() {
                }
                else {
                   // no payment method
-                  alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + v);
+                  alert('Please complete your subscription here: http://localhost:3030/subscription/' + ch + '/' + tR + '/' + v);
                }
              })
 
         })
+    }
     }
   }
 
@@ -200,6 +207,7 @@ export default function Channels() {
 
       return prodList.map((pd) => {
         const priceId = pd.id;
+        const priceTaxId = priceId + "-tax";
         const nm = pd.metadata.channel;
         const ur = pd.metadata.user;
         const ph = pd.metadata.phone;
@@ -207,6 +215,11 @@ export default function Channels() {
           <tr key={priceId}>
             <td>{nm} ({pd.unit_amount}¢)</td>
             <td>{ur} {(ph.startsWith("acct_")) ? '' : '(' + ph + ')'}</td>
+            <td>
+              <label>
+                  <input id={priceTaxId} type="text" name="tax" size="5" maxLength="5" placeholder="tax(%)"/>
+              </label>
+            </td>
             <td>
               <label>
                   <input id={priceId} type="text" name="sub" size="10" maxLength="20" placeholder="customer"/>
@@ -252,6 +265,7 @@ export default function Channels() {
               <tr>
                 <th>Channel</th>
                 <th>Channel Owner</th>
+                <th>Tax</th>
                 <th>Action</th>
               </tr>
             </thead>
