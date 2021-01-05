@@ -243,9 +243,8 @@ export default function Channels() {
 
   return (
     <div className="App">
-      <div className="AdminContent">
-        <div style={{margin:'auto'}}><img src={logo} alt="logo"/></div>
-        <div style={{padding : '20px'}}>
+      <div className="ChannelApp">
+        <div className="ChannelContent">
           <form key="random4" onSubmit={handleAdd}>
               <label>
                   <input type="text" name="name" value={productName} placeholder="Product Name" onChange={handleChange}/>
@@ -259,7 +258,7 @@ export default function Channels() {
               <button type="submit">Add Channel</button>
           </form>
         </div>
-        <div>
+        <div className="ChannelContent">
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
