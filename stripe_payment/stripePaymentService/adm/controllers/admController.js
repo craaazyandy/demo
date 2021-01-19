@@ -100,7 +100,7 @@ exports.all_subs = (req, res) => {
 	
 	try {
 		stripe.subscriptions.list({
-								limit: 10,
+								limit: 100,
 							})
 							.then(s => {
 								console.log(s);
@@ -179,4 +179,46 @@ exports.new_subs = (req, res) => {
 		res.status(500).send({errors: err});
 	}
 
+};
+
+/**
+ * Find all charges
+ */
+exports.all_charges = (req, res) => {
+	console.log('LIST ALL CHARGES:' + JSON.stringify(req.body));
+	
+	try {
+		stripe.charges.list({
+						limit: 100,
+					  })
+					  .then(c => {
+						console.log(c);
+						res.status(200).send(c);
+					  })
+					  .catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};
+
+/**
+ * Find all orders
+ */
+exports.all_orders = (req, res) => {
+	console.log('LIST ALL ORDERS:' + JSON.stringify(req.body));
+	
+	try {
+		stripe.orders.list({
+						limit: 100,
+					 })
+					 .then(o => {
+						console.log(o);
+						res.status(200).send(o);
+					 })
+					 .catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
 };

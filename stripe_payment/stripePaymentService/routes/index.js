@@ -28,6 +28,8 @@ router.get('/payment_intents', cust.all_payment_intents);
 router.get('/payment_methods/:cust', cust.all_payment_methods);
 router.get('/invoices', cust.all_invoices);
 router.get('/subs', adm.all_subs);
+router.get('/charges', adm.all_charges);
+router.get('/orders', adm.all_orders);
 
 router.post('/create-checkout-session', adm.create_checkout_session);
 router.post('/subs', adm.new_subs);
