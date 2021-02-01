@@ -72,3 +72,27 @@ exports.all_prods = (req, res) => {
 		res.status(500).send({errors: err});
 	}
 };
+
+
+/**
+ * Updating a price to set the active flag to false
+ */
+exports.update_price = (req, res) => {
+	console.log('INACTIVATE PRICE:' + JSON.stringify(req.body));
+	console.log('              ID:' + req.params.id);
+	
+	// Delete Price
+	try {
+		stripe.prices.update(req.params.id, {
+						active: false
+					 })
+					 .then(prices => {
+						console.log(prices);
+						res.status(200).send(prices);
+					 })
+					 .catch(error => console.error(error));
+	}
+	catch (err) {
+		res.status(500).send({errors: err});
+	}
+};

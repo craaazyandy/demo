@@ -19,6 +19,7 @@ router.delete('/cust/:id', cust.delete_cust);
 router.get('/acct_link/:id', acct.acct_link);
 
 router.post('/prod', prod.new_prod);
+router.post('/price/:id', prod.update_price);
 
 router.get('/accts', acct.all_accts);
 router.get('/prods', prod.all_prods);
