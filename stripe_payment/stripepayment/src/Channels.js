@@ -205,7 +205,9 @@ export default function Channels() {
     
     if (prodList && prodList.length > 0) {
 
-      return prodList.map((pd) => {
+      return prodList
+      .filter((pd) => pd.active === true)
+      .map((pd) => {
         const priceId = pd.id;
         const priceTaxId = priceId + "-tax";
         const nm = pd.metadata.channel;
