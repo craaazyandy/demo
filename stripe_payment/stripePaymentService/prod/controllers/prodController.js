@@ -9,6 +9,8 @@ exports.new_prod = (req, res) => {
 	console.log('      PRICE:' + req.body.price);
 	console.log('       USER:' + req.body.user);
 	console.log('      PHONE:' + req.body.phone);
+	
+	currency = (req.body.name.startsWith("gb") ? 'gbp' : 'usd' );
 
 	// Stripe API to create new Product wrapped inside a Price
 	try {
@@ -25,7 +27,7 @@ exports.new_prod = (req, res) => {
 							// res.status(200).send({result: 1});
 							stripe.prices.create({
 											unit_amount: req.body.price,
-											currency: 'usd',
+											currency: currency,
 											recurring: {interval: 'day'},
 											product: pid,
 											metadata: {
